@@ -184,9 +184,24 @@ function ball(x,y,r,a=1){
   X.stroke();
 
   if(I.mascot){
-    let s=r*1.25;
-    let ar=I.mascot.width/I.mascot.height;
-    X.drawImage(I.mascot,x-s/2,y-s/(2*ar),s,s/ar)
+  let s=r*1.05;
+  let ar=I.mascot.width/I.mascot.height;
+
+  X.save();
+  X.beginPath();
+  X.arc(x,y,r-3,0,Math.PI*2);
+  X.clip();
+
+  X.drawImage(
+    I.mascot,
+    x-s/2,
+    y-s/(2*ar),
+    s,
+    s/ar
+  );
+
+  X.restore();
+  }
   }else{
     X.fillStyle='#1b6cdf';
     rr(x-r*.58,y-r*.25,r*1.16,r*.62,r*.2);
@@ -1204,12 +1219,21 @@ function click(x,y){
 }
 
 C.addEventListener('pointerdown',e=>{
-  let p=point(e);
-  click(p.x,p.y)
-});
+  e.preventDefault();
 
-C.addEventListener('pointerup',()=>{
-  key.l=key.r=key.j=0
+  let p=point(e);
+  click(p.x,p.y);
+},{passive:false});
+
+C.addEventListener('pointerup',e=>{
+  e.preventDefault();
+  key.l=key.r=key.j=0;
+},{passive:false});
+
+C.addEventListener('pointercancel',e=>{
+  e.preventDefault();
+  key.l=key.r=key.j=0;
+},{passive:false});
 });
 
 addEventListener('keydown',e=>{
