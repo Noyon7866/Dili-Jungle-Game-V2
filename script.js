@@ -1234,6 +1234,7 @@ C.addEventListener('pointercancel',e=>{
   e.preventDefault();
   key.l=key.r=key.j=0;
 },{passive:false});
+}
 });
 
 addEventListener('keydown',e=>{
